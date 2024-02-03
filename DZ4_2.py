@@ -1,5 +1,5 @@
 
-def create_cats_dict(file_path):
+def get_cats_info(file_path):
     cats_dict = {}
     try:
         with open(file_path, 'r') as file:
@@ -15,5 +15,5 @@ def create_cats_dict(file_path):
 
 # Приклад виклику функції для створення словника
 file_path = 'cats_file.txt'
-cats_dict = create_cats_dict(file_path)
+cats_dict = get_cats_info(file_path)
 print(cats_dict)

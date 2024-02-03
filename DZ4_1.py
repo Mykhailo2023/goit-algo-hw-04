@@ -1,44 +1,36 @@
-from colorama import Fore, Back, Style
 
+def total_salary():
 
-def read_salary_data(file_path):
-    data = []
+     # Функція total_salary(path) має приймати один аргумент - шлях до текстового файлу (path).
+    path = 'salary_file.txt'
+# Робимо виключення якщо файл не існує
     try:
-        with open(file_path, 'r') as file:
-            for line in file:
-                # Розділяємо рядок за комою та створюємо кортеж
-                values = tuple(line.strip().split(','))
-                data.append(values)
+        # відкриваємо файл на читання (не забуваємо про кодування)
+
+        with open(path, 'r', encoding='utf-8') as file:
+
+            # зчитуємо дані з файлу і розбиваємо  по комі
+            data = [tuple(line.strip().split(',')) for line in file]
+
+        # якщо нічого не знайшло 
+        if not data:
+            print("No data available.")
+            return None, None
+        
+        # математичні дії
+        salaries = [float(row[1]) for row in data]
+        total = sum(salaries)
+        average = total / len(salaries)
+
+        # виводимо результат
+        print(f"Загальна сума заробітної плати: {total}, Середня заробітна плата: {average}")
+        return total, average        
+
     except FileNotFoundError:
         print(f"File not found: {file_path}")
-    return data
-
-def calculate_statistics(data):
-    if not data:
         return None, None
-    
-    salaries = [float(row[1]) for row in data]  
-    average_salary = sum(salaries) / len(salaries)    
-    total = sum(salaries)
-    
-    return average_salary, total
 
-# Викликаємо функцію для читання даних та розрахунку статистики
-file_path = 'salary_file.txt'
-salary_data = read_salary_data(file_path)
+# Виклик функції
+total_salary()
 
-# Перевірка чи є дані та виведення їх
-if salary_data:
-    for row in salary_data:
-        continue
-    
-    # Розрахунок та виведення статистики
-    average_salary, total = calculate_statistics(salary_data)
-    if average_salary is not None and total is not None:
-    #     Кольори зробив, бо просто цікаво
-       print(f" {Fore.BLUE}Загальна сума заробітної плати: {Fore.RED} {total}, {Fore.CYAN} Середня заробітна плата:{Fore.GREEN} {average_salary} {Fore.RESET}")       
-
-    else:
-        print("Unable to calculate statistics.")
-else:
-    print("No data available.")
+# я розумії що забагато коментарів, але поки мушу так робити щоб запамятати
